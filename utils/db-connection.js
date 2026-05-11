@@ -1,48 +1,26 @@
-const express = require('express');
 const mysql = require('mysql2');
 
-
-const connection = mysql.createConnection({
-    host: "localhost",
-    database: "myFirstDb",
+const connection= mysql.createConnection({
+    host: 'localhost',
     user: "root",
-    password: "1234"
+    password: '1234',
+    database: 'myFirstDb'
 });
 
+const connectionQuery = `CREATE TABLE IF NOT EXISTS STUDENTS (ID INT AUTO_INCREMENT PRIMARY KEY,
+NAME VARCHAR(20) NOT NULL, EMAIL VARCHAR(50) UNIQUE NOT NULL, AGE INT NOT NULL)`;
 
-connection.connect((err) => {
-    if (err) {
-        console.log("DB connection Error: " + err.message);
+connection.connect((err)=>{
+    if(err){
+        console.log(err.message);
     }
-    console.log('Connection Established successfully!');
+    console.log('Database Connected...');
 
-
-    // User table creation...
-    const userTable = `CREATE TABLE IF NOT EXISTS USERS (  
-    ID INT AUTO_INCREMENT PRIMARY KEY, 
-    NAME VARCHAR(20) NOT NULL, 
-    PHONE INT(15) NOT NULL       )`
-
-    connection.execute(userTable, (err) => {
-        if (err) {
+    connection.execute(connectionQuery, (err)=>{
+        if(err){
             console.log(err.message);
         }
-        console.log('Online Bus Service is Connected with USERs Successfully!');
-    })
-
-
-    // Busses table creation
-    const busTable = `CREATE TABLE IF NOT EXISTS BUSES  (
-    BUS_ID INT AUTO_INCREMENT PRIMARY KEY, 
-    BUS_NAME VARCHAR(20) NOT NULL,
-    TOTAL_SEATS INT NOT NULL,
-    AVAILABLE_SEATS INT NOT NULL    )`
-
-    connection.execute(busTable, (err) => {
-        if (err) {
-            console.log("DB connection Error: " + err.message);
-        }
-        console.log('Busses Table Created Successfully!')
+        console.log("Connection has been stablished Successfully...!");
     })
 
 })
