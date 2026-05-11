@@ -1,16 +1,16 @@
 const express = require('express');
+const userRouter = require('./routes/userRouter');
+const busRouter = require('./routes/busRouter');
+const db = require('./utils/db-connection');
 const app = express();
-const db = require('./utils/db-connections');
-const studentsRoutes = require('./routes/studentRoutes');
-
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send('<h1>Check tables now...</h1>');
+
+app.use('/users', userRouter);
+app.use('/buses', busRouter);
+
+app.get('/', (req, res)=>{
+    res.send('<h1> 555-BUS SERVICES</h1>');
 })
 
-
-app.use('/students', studentsRoutes);
-
-
-app.listen(3000, () => console.log("online..."));
+app.listen(3000, ()=> console.log('Bus Service is Online...'));
