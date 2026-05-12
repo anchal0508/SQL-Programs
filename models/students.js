@@ -18,7 +18,6 @@ const Students = sequelize.define('Students', {
         allowNull: false,
 
     }
-
 })
 
 module.exports = Students;
