@@ -1,5 +1,6 @@
 const db = require('../utils/db-connection');
 const Student = require('../models/students');
+const sequelize = require('../utils/db-connection');
 
 const addStudent = async (req, res) => {
 
@@ -18,25 +19,11 @@ const addStudent = async (req, res) => {
 
 
 
-
-
-
-    // const query = `INSERT INTO STUDENTS (NAME, EMAIL, AGE) VALUES ( ?, ?, ?)`;
-
-    // db.execute(query, [NAME, EMAIL, AGE], (err, result) => {
-    //     if (err) {
-    //         console.log(err.message);
-    //         return res.status(500).send(err.message);
-    //     }
-    //     console.log(`Studend Data inserted Successfully with ID: ${result.insertId}!`);
-    //     res.status(200).send(`Studend Data inserted Successfully with ID: ${result.insertId}!`);
-    // });
-
 }
 
 const updateStudent = async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const { name } = req.body;
 
         const student = await Student.findByPk(id);
@@ -51,65 +38,44 @@ const updateStudent = async (req, res) => {
         res.status(200).send('student has been UPDATED');
     }
     catch (error) {
-        res.status(500).send('Student can not be updated...'+ error.message);
+        res.status(500).send('Student can not be updated...' + error.message);
     }
 
 
-
-
-
-    // const query = `UPDATE STUDENTS SET NAME = ? WHERE ID = ?`;
-
-    // db.execute(query, [NAME, ID], (err, result) => {
-    //     if (err) {
-    //         console.log(err.message);
-    //         return res.status(500).send(err.message);
-    //     }
-    //     if (result.affectedRows === 0) {
-    //         console.log('Student Not Found');
-    //         res.status(404).send(`Student Not Found with ID: ${ID}`);
-    //     }
-    //     console.log(`Student name has been updated to : ${NAME}`);
-    //     res.status(200).send(`Student name has been updated to : ${NAME}`);
-    // })
-
 }
 
 
-const getStudentById = (req, res) => {
-    const id = req.params.id;
-    const query = `SELECT * FROM STUDENTS WHERE ID = ?`;
-
-    db.execute(query, [id], (err, result) => {
-        if (err) {
-            console.log(err.message);
-            return res.status(500).send(err.message);
+const getStudentById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const student = await Student.findByPk(id);
+        if (!student) {
+            console.log('Student not Found');
+            res.status(404).send('Student not Found...');
         }
+        res.status(200).send(student);
+    } catch (error) {
+        res.status(500).send('Error in fatching Student');
+    }
 
-        console.log(result);
-        res.status(200).send(result);
-    })
 }
 
 
 
-const getAllStudents = (req, res) => {
-    const query = `SELECT * FROM STUDENTS`;
-    db.execute(query, (err, result) => {
-        if (err) {
-            console.log(err.message);
-            return res.status(500).send(err.message);
-        }
-        console.log(result);
-        res.status(200).send(result);
+const getAllStudents = async (req, res) => {
+    try {
+        const students = await Student.findAll();
+        res.status(200).json(students);
+    } catch (error) {
+        res.status(500).send('Error in feching students');
+    }
 
-    })
 }
 
-const deleteStudent = async (req, res)=>{
-      try {
-       const { id } = req.params;
-        
+const deleteStudent = async (req, res) => {
+    try {
+        const { id } = req.params;
+
         // student yahan deleted rows ka number return karega (0 or 1)
         const deletedRows = await Student.destroy({
             where: { id: id }

@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 
 app.use('/students', studentsRoute);
 
-db.sync({force: true}).then(() => {
+db.sync().then(() => {
     
     app.listen(3000, () => console.log('Student Management API Project Online...'));
 
