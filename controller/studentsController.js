@@ -24,7 +24,7 @@ const addStudent = async (req, res) => {
 const updateStudent = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name } = req.body;
+        const { name, email } = req.body;
 
         const student = await Student.findByPk(id);
 
@@ -32,8 +32,11 @@ const updateStudent = async (req, res) => {
             res.status(404).send('Student is not Found');
         }
 
-        student.name = name;
-        await student.save();
+        // student.name = name;
+        await student.update({
+            name: name || student.name,
+            email: email || student.email
+        });
 
         res.status(200).send('student has been UPDATED');
     }
