@@ -1,5 +1,7 @@
-const { Sequelize, DataType } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 const UserTable = require('../models/userTable');
+const sequelize = require('../utils/db-connection');
+const IdentityCard = require('../models/identitycard');
 
 const addUser = async (req, res) => {
     try {
@@ -76,9 +78,28 @@ const updateUser = async (req, res) => {
 }
 
 
+const addingValuesToUserAndIdentityTable = async (req, res) => {
+    try {
+        const user = await UserTable.create(req.body.users);
+        const idCard = await IdentityCard.create({
+            ...req.body.IdentityCard,
+            UserId: user.id
+        })
+        res.status(201).json({ users, idCard });
+    } catch (error) {
+       if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+            console.log("Validation Errors:", error.errors.map(e => e.message));
+            return res.status(400).json({ error: error.errors.map(e => e.message) });
+        }
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
 module.exports = {
     addUser,
     getAllUsers,
     deleteUser,
-    updateUser
+    updateUser,
+    addingValuesToUserAndIdentityTable
 }

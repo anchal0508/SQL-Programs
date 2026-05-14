@@ -2,10 +2,10 @@
   "name": "new-555-prac",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon node index.js"
+    "start": "nodemon node app.js"
   },
   "keywords": [],
   "author": "",

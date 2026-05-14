@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
 
 // Users routing section
 app.use('/api/users', usersRoute);
+require('./models');
 
 db.sync().then(() => {
     app.listen(3000, () => console.log("online..."));

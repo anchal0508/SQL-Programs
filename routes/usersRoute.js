@@ -17,4 +17,7 @@ route.put('/:id', userController.updateUser);
 // Delete User using ID number
 route.delete('/:id', userController.deleteUser);
 
+
+route.post("/addingUserswithCard", userController.addingValuesToUserAndIdentityTable);
+
 module.exports = route;
