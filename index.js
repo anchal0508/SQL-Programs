@@ -1,29 +1,24 @@
-const cors = require('cors');
 const express = require('express');
 const app = express();
+const db = require('./utils/db-connection');
+const usersRoute = require('./routes/usersRoute');
+const cors = require('cors');
 app.use(express.json());
-const userTable = require('./models/user');
-const db = require('./util/db-connection');
-const userRoutes = require('./routes/userRoute');
-const fs = require('fs');
-const path = require('path');
-
-app.use(cors());
 app.use(express.static('public'));
+app.use(cors());
+const path = require('path');
+const filepath = path.join(__dirname, ".", "view", "registration.html");
 
-const filePath = path.join(__dirname, ".", "view", "user.html");
 
 app.get('/', (req, res) => {
-    res.sendFile(filePath);
+    res.sendFile(filepath);
 })
 
-
-app.use('/users', userRoutes);
-
-
+// Users routing section
+app.use('/api/users', usersRoute);
 
 db.sync().then(() => {
-    app.listen(3000, () => console.log('Online...'));
+    app.listen(3000, () => console.log("online..."));
 }).catch((err) => {
     console.log(err);
 })

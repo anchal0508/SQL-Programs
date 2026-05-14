@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>555-Transport Agency</title>
+</head>
+
+<body>
+    <h1>555-Transport Agency</h1>
+
+    <!-- User Registration Form -->
+    <form onsubmit="handleFormSubmit(event)" method="post" id="regForm">
+        <h2> User Registration Form </h2>
+        <label for="name">User Name:
+            <input type="text" name="name" id="name" />
+        </label>
+        <label for="phone">Phone:
+            <input type="tel" name="phone" id="phone"/>
+        </label>
+        <label for="email">Email:
+            <input type="email" name="email" id="email"/>
+        </label>
+        <label for="location">My Home Location:
+            <input type="location" name="location" id="location" />
+        </label>
+        <button type="submit">Register User</button>
+    </form>
+
+
+    <!-- List of Registered Users-->
+    <div class="regUser">
+        <h2>Registered Users</h2>
+        <ul id="userList"></ul>
+    </div>
+
+
+    <!-- User Login Form -->
+    <div class="login-Container">
+        <h2>Login</h2>
+    </div>
+    <script src="/js/userScript.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js"></script>
+</body>
+
+</html>
