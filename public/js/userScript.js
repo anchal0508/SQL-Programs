@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         const list = await axios.get(API_LINK);
         list.data.forEach(element => {
             displayUser(element);
-            console.log(element);
+            // console.log("=========="+element);
         });
     } catch (error) {
         console.log(error)

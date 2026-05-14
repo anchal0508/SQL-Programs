@@ -10,10 +10,11 @@ const IdentityCard = sequelize.define('identityCard', {
         allowNull: false
     },
     cardNo: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.INTEGER,
-        unique: true
-    }
+        unique: false
+    },
+    
 });
 
 

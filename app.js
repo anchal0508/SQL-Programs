@@ -8,6 +8,7 @@ app.use(express.static('public'));
 app.use(cors());
 const path = require('path');
 const filepath = path.join(__dirname, ".", "view", "registration.html");
+const courseRoutes = require('./routes/courseRoutes');
 
 
 app.get('/', (req, res) => {
@@ -16,9 +17,10 @@ app.get('/', (req, res) => {
 
 // Users routing section
 app.use('/api/users', usersRoute);
+app.use('/api/courses', courseRoutes);
 require('./models');
 
-db.sync().then(() => {
+db.sync({force: false}).then(() => {
     app.listen(3000, () => console.log("online..."));
 }).catch((err) => {
     console.log(err);

@@ -8,14 +8,16 @@ const addUser = async (req, res) => {
         const { id } = req.params;
         const { name, phone, email, location } = req.body;
 
-        const addUser = await UserTable.create({
-            name: name,
-            phone: phone,
-            email: email,
-            location: location
-        });
-
-        res.status(200).json({ 'newUser': addUser });
+        // const addUser = await UserTable.create({
+        //     name: name,
+        //     phone: phone,
+        //     email: email,
+        //     location: location
+        // });
+         const addUser = await UserTable.create(req.body);
+         const addIdCard = await IdentityCard.create({cardNo: '13243', userId: addUser.id});
+ 
+        res.status(200).json({ newUser:addUser, addIdCard});
 
     } catch (error) {
         console.log(error);
@@ -25,7 +27,11 @@ const addUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
     try {
-        const list = await UserTable.findAll();
+        const list = await UserTable.findAll({
+            include:{
+                model: IdentityCard, as : "id Card"
+            }
+        });
         res.status(200).json(list);
 
     } catch (error) {
