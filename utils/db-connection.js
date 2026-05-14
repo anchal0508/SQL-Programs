@@ -1,4 +1,5 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
+
 
 const sequelize = new Sequelize('myFirstDb', 'root', '1234', {
     host: 'localhost',
@@ -6,16 +7,13 @@ const sequelize = new Sequelize('myFirstDb', 'root', '1234', {
 });
 
 
-
-
 (async () => {
     try {
         await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
+        console.log('Connection has been established successfully!');
     } catch (error) {
-        console.error('Unable to connect to the database:', error);
+        console.log(error.message);
     }
 })();
-
 
 module.exports = sequelize;

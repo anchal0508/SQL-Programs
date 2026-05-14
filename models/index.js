@@ -1,41 +1,20 @@
-const User = require('./userTable');
-const IdentityCard = require('./identitycard');
-const department = require('./department');
-const courses = require('./courses');
-const userCourses = require('./userCourses');
+const User = require('./user');
+const Bus = require('./bus');
+const Booking = require('./booking');
 
 
-// one to one relation ship
-User.hasOne(IdentityCard, {
-    foreignKey: 'userId',
-    as: 'idCard'
-});
-IdentityCard.belongsTo(User, {
-    foreignKey: 'userId',
-    as : 'user'
-})
+// User booking One to Many connection -> One User can have many Bookings
+User.hasMany(Booking, {foreignKey: 'userId', onDelete: 'CASCADE'});
+Booking.belongsTo(User, {foreignKey: 'userId'});
 
 
-// one to many
+// Bus bookings (also One to Many) -> one Bus can have many Users
+Bus.hasMany(Booking, {foreignKey: 'busId', onDelete: 'CASCADE'});
+Booking.belongsTo(Bus, {foreignKey: 'busId'});
 
-department.hasMany(User, {
-    foreignKey: 'userId',
-    as: 'user info'
-});
-User.belongsTo(department,{
-     foreignKey: 'userId',
-     as: 'Department'
-})
-
-
-// many to many
-
-User.belongsToMany(courses, {through: userCourses});
-courses.belongsToMany(User, {through: userCourses});
 
 module.exports = {
-    IdentityCard,
-    User,
-    courses,
-    userCourses
+    User, 
+    Bus, 
+    Booking
 }
