@@ -85,7 +85,7 @@ const addingValuesToUserAndIdentityTable = async (req, res) => {
             ...req.body.IdentityCard,
             UserId: user.id
         })
-        res.status(201).json({ users, idCard });
+        res.status(201).json({ user, idCard });
     } catch (error) {
        if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
             console.log("Validation Errors:", error.errors.map(e => e.message));
