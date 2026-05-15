@@ -1,21 +1,26 @@
 const express = require('express');
 const app = express();
-const db = require('./utils/db-connection');
-require('./models/index');
-const userRoutes = require('./routes/userRoutes');
-const UserTable = require('./models/user');
-
-
 app.use(express.json());
+const cors = require('cors');
+app.use(cors());
+
+const db = require('./utils/db-connection');
+const expenseRoute = require('./router/expenseroute');
+
+app.use(express.static('public'));
+const path = require('path');
+const filepath = path.join(__dirname, ".", "view", "expense.html");
 
 app.get('/', (req, res) => {
-    res.send('hello');
+    res.sendFile(filepath);
 });
 
-app.use('/api', userRoutes);
+app.use('/expenses', expenseRoute);
 
-db.sync({ force: true }).then(() => {
-    app.listen(3000, () => console.log('Online...'));
-}).catch((error)=>{
-    console.log(error.message);
+
+
+db.sync().then(() => {
+    app.listen(3000, () => console.log('Online....'));
+}).catch((err) => {
+    console.log(err.message);
 })

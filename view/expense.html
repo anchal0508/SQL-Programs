@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full stack Expense App
+
+</title>
+</head>
+<body>
+    <h1>Full stack Expense App</h1>
+    <form onsubmit="handleFormSubmit(event)" method="post">
+        <label for="expenseOn">Expense On:
+            <input type="text" name="expenseOn" id="expenseOn"/>
+        </label>
+        <label for="amount">Amount:
+            <input type="text" name="amount" id="amount"/>
+        </label>
+        <button type="submit">Add Expense</button>
+    </form>
+
+    <ul id="expense-list"></ul>
+    <script src="/js/expense.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js"></script>
+</body>
+</html>
