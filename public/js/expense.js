@@ -35,20 +35,28 @@ function displayOnScreen(expense) {
     const content = `
         <span> ${expense.expenseOn} </span> 
         <span> ${expense.amount} </span> 
-        <button onclick="editExpense('${expense.id}', '${expense.expenseOn}', ${expense.amount} , ${li})">Edit</button>
-        <button onclick="deleteExpense('${expense.id}, ${li}')">Delete</button>
     `;
     const li = newElement('li', content, 'list-item');
+
+    const deleteBtn = newElement('button', "Delete", 'list-btn', () => deleteExpense(expense.id, li));
+    const editBtn = newElement('button', "Edit", 'list-btn', () => editExpense(expense.id, expense.expenseOn, expense.amount, li));
+
+
+
+
+    li.appendChild(deleteBtn);
+    li.appendChild(editBtn);
     ul.appendChild(li);
 
 }
 
 
-const newElement = (tagName, content, className) => {
+const newElement = (tagName, content, className, onclick) => {
     const element = document.createElement(tagName);
- 
+
     if (content) element.innerHTML = content;
     if (className) element.className = className;
+    if (typeof onclick === 'function') element.onclick = onclick;
     return element;
 }
 
@@ -58,26 +66,25 @@ let editId = null;
 
 async function deleteExpense(id, li) {
     try {
-      
+        li.remove();
         await axios.delete(`${API_LINK}/delete/${id}`);
-        
+
         const liElement = document.getElementById(`expense-${id}`);
         if (liElement) liElement.remove();
-        
+
         console.log("Expense deleted successfully");
     } catch (error) {
         console.log("Delete Error:", error.message);
     }
-    location.reload(); 
 }
 
 function editExpense(id, expenseOn, amount, li) {
-  
+
+    li.remove();
     document.getElementById('expenseOn').value = expenseOn;
     document.getElementById('amount').value = amount;
-    
-    editId = id; 
-    
+
+    editId = id;
+
     document.querySelector('button[type="submit"]').innerText = "Update Expense";
-    location.reload(); 
 }
