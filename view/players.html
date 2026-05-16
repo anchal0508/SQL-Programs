@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js"></script>
+    <title>PLAYER INFORMATION</title>
+    <link rel="stylesheet" href="/js/style.css">
+    <!-- <script src="https://jsdelivr.net"></script> -->
+</head>
+
+<body>
+    <div class="main-container">
+        <h1>PLAYER INFORMATION</h1>
+        <form onsubmit="handleFormSubmit(event)" method="post" id="form">
+            <label for="name">Name:
+                <input type="text" name="name" id="name" />
+            </label>
+            <label for="dob">Date of Birth:
+                <input type="date" name="dob" id="dob" />
+            </label>
+            <label for="url">Photo URL:
+                <input type="url" name="url" id="url" />
+            </label>
+            <label for="bPlace">Birthplace:
+                <input type="text" name="bPlace" id="bPlace" />
+            </label>
+            <label for="career">Career:
+                <input type="text" name="career" id="career" />
+            </label>
+            <label for="matches">Number of Matches:
+                <input type="text" name="matches" id="matches" />
+            </label>
+            <label for="score">Score:
+                <input type="text" name="score" id="score" />
+            </label>
+            <label for="fifty">Fifties:
+                <input type="text" name="fifty" id="fifty" />
+            </label>
+            <label for="century">Centuries:
+                <input type="text" name="century" id="century" />
+            </label>
+            <label for="wicket">Wicket:
+                <input type="text" name="wicket" id="wicket" />
+            </label>
+            <label for="average">Average:
+                <input type="text" name="average" id="average" />
+            </label>
+            <button type="submit">Add Player</button>
+        </form>
+        <div class="search">
+            <input type="text" name="search" id="search" placeholder="Search a player" />
+            <button onclick="searchData(document.getElementById('search').value)">Search</button>
+        </div>
+        <div class="dashboard">
+            <div class="main-info">
+                <img id="playerImage" src="https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg" alt="profile Image" width="200">
+                <p>Date of Birth : <span id="dispdob">--</span></p>
+                <p>Name: <span id="dispName">--</span></p>
+                <hr>
+                <h2>Profile Details:</h2>
+                <p>No of Matches: <span id="matchesDisplay">--</span></p>
+                <p>No of runs: <span id="dispruns">--</span></p>
+                <p>No of fifty: <span id="dispfifty">--</span></p>
+                <p>No of century: <span id="dispcentury">--</span></p>
+                <p>No of average: <span id="dispavg">--</span></p>
+                <p>No of Wickets: <span id="dispWickets">--</span></p>
+            </div>
+            <div id="dispcareer">--</div>
+        </div>
+    </div>
+    <script src="/js/player.js"></script>
+</body>
+
+</html>

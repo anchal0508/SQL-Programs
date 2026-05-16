@@ -2,7 +2,7 @@
   "name": "sql",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon node app.js"
@@ -22,7 +22,6 @@
   "dependencies": {
     "cors": "^2.8.6",
     "express": "^5.2.1",
-    "fs": "^0.0.1-security",
     "mysql2": "^3.22.3",
     "nodemon": "^3.1.14",
     "sequelize": "^6.37.8"

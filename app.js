@@ -1,26 +1,27 @@
 const express = require('express');
-const app = express();
-app.use(express.json());
-const cors = require('cors');
-app.use(cors());
-
 const db = require('./utils/db-connection');
-const expenseRoute = require('./router/expenseroute');
-
-app.use(express.static('public'));
+const cors = require('cors');
 const path = require('path');
-const filepath = path.join(__dirname, ".", "view", "expense.html");
-
+const playerRouter = require('./routers/playerRouter');
+const app = express();
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
+app.use(express.json());
+const filePath = path.join(__dirname, "view", "players.html");
 app.get('/', (req, res) => {
-    res.sendFile(filepath);
+    res.sendFile(filePath);
 });
 
-app.use('/expenses', expenseRoute);
+
+app.use('/players', playerRouter);
 
 
 
-db.sync().then(() => {
-    app.listen(3000, () => console.log('Online....'));
+
+db.sync({ force: false }).then(() => {
+    app.listen(3000, () => {
+        console.log('Online...');
+    })
 }).catch((err) => {
-    console.log(err.message);
+    console.log("Error Sync DataBase: " + err.message);
 })
