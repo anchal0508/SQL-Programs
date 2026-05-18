@@ -26,7 +26,7 @@ app.use('/', (req, res) => {
 
 
 
-db.sync({alter: true}).then(() => {
+db.sync().then(() => {
     app.listen(3000, () => console.log('Online...'));
 }).catch((err) => {
     console.log('DB not sync ' + err.message);
