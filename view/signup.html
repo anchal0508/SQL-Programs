@@ -9,8 +9,8 @@
 </head>
 
 <body>
-    <form method="post">
-        <h1>Login Form</h1>
+    <form onsubmit="handleFormSubmit(event)">
+        <h1>SignUp Form</h1>
         <label for="name">Name:
             <input type="text" name="name" id="name" required />
         </label>
@@ -24,7 +24,10 @@
         <button type="submit">Submit</button>
     </form>
 
-    <h2><a href="#">Existing User: Login</a></h2
+    <h2><a href="#">Existing User: Login</a></h2>
+
+    <script src="/js/signup.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js"></script>
 </body>
 
 </html>

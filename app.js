@@ -7,19 +7,20 @@ const app = express();
 const path = require('path');
 app.use(express.static('public'));
 app.use(cors());
+app.use(express.json());
 
+app.use('/users', userRouter);
 
 const filepath = path.join(__dirname, "view", "signup.html");
 app.use('/', (req, res) => {
     res.sendFile(filepath)
 });
 
-app.use('/users', userRouter);
 
 
 
 
-db.sync().then(() => {
+db.sync({alter: true}).then(() => {
     app.listen(3000, () => console.log('Online...'));
 }).catch((err) => {
     console.log('DB not sync ' + err.message);
