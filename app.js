@@ -11,10 +11,16 @@ app.use(express.json());
 
 app.use('/users', userRouter);
 
-const filepath = path.join(__dirname, "view", "signup.html");
-app.use('/', (req, res) => {
-    res.sendFile(filepath)
+const loginfilepath = path.join(__dirname, "view", "login.html");
+app.use('/login', (req, res) => {
+    res.sendFile(loginfilepath)
 });
+
+const singnupfilepath = path.join(__dirname, "view", "signup.html");
+app.use('/', (req, res) => {
+    res.sendFile(singnupfilepath)
+});
+
 
 
 

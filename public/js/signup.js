@@ -12,7 +12,7 @@ console.log('Form Submitted...');
     try {
         const addUser = await axios.post('http://localhost:3000/users/signup', newUser);
         console.log(addUser.data);
-        alert('Successfull')
+        alert('Registration ... Successfull')
         event.target.reset();
     } catch (error) {
         console.log(error.message);
