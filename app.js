@@ -1,27 +1,26 @@
 const express = require('express');
+const userRouter = require('./router/userRouter');
 const db = require('./utils/db-connection');
-const cors = require('cors');
-const path = require('path');
-const playerRouter = require('./routers/playerRouter');
+const cors =require('cors');
 const app = express();
-app.use(express.static(path.join(__dirname, 'public')));
+
+const path = require('path');
+app.use(express.static('public'));
 app.use(cors());
-app.use(express.json());
-const filePath = path.join(__dirname, "view", "players.html");
-app.get('/', (req, res) => {
-    res.sendFile(filePath);
+
+
+const filepath = path.join(__dirname, "view", "signup.html");
+app.use('/', (req, res) => {
+    res.sendFile(filepath)
 });
 
-
-app.use('/players', playerRouter);
-
+app.use('/users', userRouter);
 
 
 
-db.sync({ force: false }).then(() => {
-    app.listen(3000, () => {
-        console.log('Online...');
-    })
+
+db.sync().then(() => {
+    app.listen(3000, () => console.log('Online...'));
 }).catch((err) => {
-    console.log("Error Sync DataBase: " + err.message);
+    console.log('DB not sync ' + err.message);
 })

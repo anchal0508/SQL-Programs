@@ -6,17 +6,17 @@ const sequelize = new Sequelize('myFirstDb', 'root', '1234', {
     dialect: 'mysql'
 });
 
-(async () => {
 
+(async () => {
     try {
         sequelize.authenticate();
-        console.log('DataBase is Connected Successfully...!');
+        console.log('DB Connected...');
+
     } catch (error) {
-        console.log("Error connecting DataBase: " + error.message);
+        console.log('DB not Connected...' + error.message);
     }
 
 })();
-
 
 
 module.exports = sequelize;
