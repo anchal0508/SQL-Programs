@@ -6,7 +6,8 @@ const handleFormSubmit = async (event) => {
     const newUser = {
         amount: amount.value,
         details: details.value,
-        category: category.value
+        category: category.value,
+        userId: 1
     };
     try {
         const response = await axios.post('http://localhost:3000/expenses/add', newUser);
@@ -37,10 +38,11 @@ window.addEventListener('DOMContentLoaded', async () => {
 function displayOnScreen(expense) {
     const ul = document.getElementById('exp-list');
     const content = `
-    <span> ${expense.expid} </span>
+    <span> ${expense.id} </span>
     <span> ${expense.amount} </span>
     <span> ${expense.details} </span>
-    <span> ${expense.category} </span>
+    <span> ${expense.category} </span>  - with userID: 
+    <span> ${expense.userId} </span>
     `
     const li = newElement('li', content, 'list-item');
 
@@ -53,7 +55,7 @@ function displayOnScreen(expense) {
 const deleteExp = async (expense, li) => {
     li.remove();
     try {
-        await axios.delete(`http://localhost:3000/expenses/delete/${expense.expid}`);
+        await axios.delete(`http://localhost:3000/expenses/delete/${expense.id}`);
     } catch (error) {
         console.log(error.message);
     }

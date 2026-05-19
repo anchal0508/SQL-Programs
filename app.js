@@ -39,7 +39,7 @@ app.use('/users', userRouter);
 app.use('/expenses', expenseRouter);
 
 
-db.sync().then(() => {
+db.sync( ).then(() => {
     app.listen(3000, () => console.log("Online...."));
 }).catch((err) => {
     console.log('Unable to sync Data Base : ' + err.message);

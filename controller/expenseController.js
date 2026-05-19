@@ -28,7 +28,7 @@ const addExpense = async (req, res) => {
 const deleteExpense = async (req, res) => {
     try {
         const { id } = req.params;
-        const exp = await Expense.destroy({ where: { expid: id } });
+        const exp = await Expense.destroy({ where: { id: id } });
         if (!exp) {
             return res.status(404).json({ message: "Expense data Not Found...!" });
         }

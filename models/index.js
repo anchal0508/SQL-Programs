@@ -4,8 +4,8 @@ const Expense = require('./expense');
 
 
 
-User.hasMany(Expense, {foreignKey: 'userId'});
-Expense.belongsTo(User, {foreignKey: 'userId'});
+User.hasMany(Expense);
+Expense.belongsTo(User);
 
 
 module.exports = {

@@ -32,6 +32,7 @@ const handleLogin = async (event) => {
         if (response.status === 200 && response.data.success) {
             alert('Login Successful!');
             event.target.reset();
+            localStorage.setItem('token', response.data.token);
             window.location.href = '/expenses';
         }
     } catch (error) {

@@ -3,7 +3,7 @@ const sequelize = require('../utils/db-connection');
 
 
 const Expense = sequelize.define('expense', {
-    expid: {
+    id: {
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER
