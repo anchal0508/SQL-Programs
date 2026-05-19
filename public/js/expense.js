@@ -1,16 +1,21 @@
+ 
+
 const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log('Expense form...');
 
-    const { amount, details, category } = event.target;
-    const newUser = {
+    const { amount, details, category} = event.target;
+    const newExp = {
         amount: amount.value,
         details: details.value,
         category: category.value,
-        userId: 1
     };
     try {
-        const response = await axios.post('http://localhost:3000/expenses/add', newUser);
+        const token = localStorage.getItem('token');
+
+        const response = await axios.post('http://localhost:3000/expenses/add', newExp,{
+            headers: {"Authorization": token}
+        });
         console.log(response.data.message);
         displayOnScreen(response.data.data)
         event.target.reset();
@@ -23,14 +28,16 @@ const handleFormSubmit = async (event) => {
 
 window.addEventListener('DOMContentLoaded', async () => {
     try {
-        const exp = await axios.get('http://localhost:3000/expenses/allexp');
-        const expense = exp.data;
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:3000/expenses/allexp', {
+            headers: {"Authorization": token}
+        });
+      
 
-        expense.forEach((ex) => {
-            displayOnScreen(ex);
-        })
+        response.data.forEach((ex) => displayOnScreen(ex));
+
     } catch (error) {
-        console.log(error.message);
+         console.error("Fetch error:", error.message);
     }
 });
 
@@ -41,8 +48,7 @@ function displayOnScreen(expense) {
     <span> ${expense.id} </span>
     <span> ${expense.amount} </span>
     <span> ${expense.details} </span>
-    <span> ${expense.category} </span>  - with userID: 
-    <span> ${expense.userId} </span>
+    <span> ${expense.category} </span>  
     `
     const li = newElement('li', content, 'list-item');
 
@@ -55,7 +61,10 @@ function displayOnScreen(expense) {
 const deleteExp = async (expense, li) => {
     li.remove();
     try {
-        await axios.delete(`http://localhost:3000/expenses/delete/${expense.id}`);
+        const token = localStorage.getItem('token');
+        await axios.delete(`http://localhost:3000/expenses/delete/${expense.id}`, {
+            headers: {"Authorization": token}
+        });
     } catch (error) {
         console.log(error.message);
     }

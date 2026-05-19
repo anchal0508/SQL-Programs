@@ -25,10 +25,11 @@ form {
     padding: 25px;
 }
 
-button, select {
+button,
+select {
     font-size: 25px;
     padding: 5px;
-    
+    background-color: #FF8C00;
 }
 
 input {
@@ -37,9 +38,11 @@ input {
 
 h2 {
     margin: 25px;
-    
+
 }
-a{
-    cursor: pointer;;
+
+a {
+    cursor: pointer;
+    ;
     padding: 10px;
 }

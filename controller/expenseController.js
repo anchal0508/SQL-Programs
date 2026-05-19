@@ -1,8 +1,16 @@
 const Expense = require('../models/expense');
 
+
+
+
 const getAllexp = async (req, res) => {
     try {
-        const expenses = await Expense.findAll();
+        const userId = req.user.id;
+        const expenses = await Expense.findAll({
+            where:{
+                userId : userId
+            }
+        });
         res.status(200).json(expenses);
         console.log("Total exp: " + expenses);
     } catch (error) {
@@ -12,9 +20,15 @@ const getAllexp = async (req, res) => {
 
 const addExpense = async (req, res) => {
     try {
-        
 
-        const exp = await Expense.create(req.body);
+        const { amount, details, category } = req.body;
+        const userId = req.user.id;
+        const exp = await Expense.create({
+            amount,
+            details,
+            category,
+            userId: userId
+        });
         res.status(201).json({
             message: "Expense added...",
             data: exp
