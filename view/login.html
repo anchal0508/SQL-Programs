@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="/js/style2.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Login</title>
 </head>
+
 <body>
-   <form onsubmit="handleFormSubmit(event)">
-        <h1>Login Form</h1>
-         
-        <label for="email">Email:
-            <input type="email" name="email" id="email" required />
-        </label>
-         <label for="pass">Password:
-            <input type="password" name="pass" id="pass" required />
-        </label>
+    <a href="/">
+        <h1>Home</h1>
+    </a>
 
-        <button type="submit">Submit</button>
-        <span id="disp"></span>
-    </form>
 
-    <h2><a href="/">Existing User: SignUp</a></h2>
+    <a href="/signup">
+        <h1>Signup</h1>
+    </a>
 
-    <script src="/js/login.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js"></script>
+    <div class="main-container">
+        <form onsubmit="handleLogin(event)" method="post">
+            <h2>Login</h2>
+            <label for="email">Email:
+                <input type="email" name="email" , id="email" required/>
+            </label>
+            <label for="pass">Password:
+                <input type="password" name="pass" , id="pass" required/>
+            </label>
+            <button type="submit">Login</button>
+        </form>
+
+        <script src="/js/signup.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js"></script>
+    </div>
 </body>
+
 </html>

@@ -25,9 +25,10 @@ form {
     padding: 25px;
 }
 
-button {
+button, select {
     font-size: 25px;
     padding: 5px;
+    
 }
 
 input {
