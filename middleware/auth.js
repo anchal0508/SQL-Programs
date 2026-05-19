@@ -4,25 +4,33 @@ const User = require('../models/user');
 var secretKey = 'my_expense_tracker_app_secret_123!';
 
 
-const authenticate = (req, res, next) => {
-    try {
-        const authHeader = req.header('Authorization');
-        // अगर हेडर में 'Bearer <token>' है तो सिर्फ टोकन अलग करेगा, नहीं तो पूरा हेडर लेगा
-        const token = authHeader && authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : authHeader;
+const authenticate =  async (req, res, next) => {
+     try {
+        const token = req.header('Authorization');
 
-        console.log(token);
-        const user = jwt.verify(token, secretKey);
-        console.log("userID >>>", user.userId);
+        // अगर टोकन है ही नहीं, तो यहीं से मना कर दो
+        if (!token) {
+            return res.status(401).json({ success: false, message: "टोकन गायब है" });
+        }
 
-        User.findByPk(user.userId).then(user => {
+        // 2. टोकन को खोलें (Decrypt करें)
+        const decoded = jwt.verify(token, secretKey);
+        console.log("userID >>>", decoded.userId);
 
-            console.log(JSON.stringify(user));
-            req.user = user;
-            next();
-        }).catch(err => { throw new Error(err) })
+        // 3. डेटाबेस से यूजर ढूंढें (बिना .then के, सीधा await लगाकर)
+        const dbUser = await User.findByPk(decoded.userId);
+
+        // अगर डेटाबेस में ऐसा कोई यूजर नहीं मिला
+        if (!dbUser) {
+            return res.status(401).json({ success: false, message: "यूजर नहीं मिला" });
+        }
+
+        // 4. यूजर का डेटा req.user में डालकर आगे भेज दें
+        req.user = dbUser;
+        next();
 
     } catch (error) {
-        console.log(error);
+        console.log("Auth Error:", error.message);
         return res.status(401).json({ success: false });
     }
 
