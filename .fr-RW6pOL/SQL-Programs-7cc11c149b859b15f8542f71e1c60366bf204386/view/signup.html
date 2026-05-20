@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>SignUp</title>
+</head>
+
+<body>
+    <a href="/">
+        <h1>Home</h1>
+    </a>
+
+    <a href="/login">
+        <h1>Login</h1>
+    </a>
+
+    <div class="main-container">
+        <form onsubmit="handleFormSubmit(event)" method="post">
+             <h2>SignUp</h2>
+            <label for="name">Name:
+                <input type="text" name="name" , id="name" required/>
+            </label>
+            <label for="email">Email:
+                <input type="email" name="email" , id="email" required/>
+            </label>
+
+            <label for="pass">Password:
+                <input type="password" name="pass" , id="pass" required/>
+            </label>
+            <button type="submit">Login</button>
+        </form>
+
+        <script src="/js/signup.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js"></script>
+    </div>
+</body>
+
+</html>
