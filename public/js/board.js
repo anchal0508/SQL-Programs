@@ -19,15 +19,17 @@ const showList = async () => {
 
 function displayOnScreen(expense) {
     const ul = document.getElementById('leader-list');
+    const totalCost = expense.total_cost || 0; 
     const content = `
-    <td> ${expense.id} </td>
-    <td> ${expense.amount} </td>
-    <td> ${expense.details} </td>
-    <td> ${expense.category} </td>  <td>
-    `
+    <td> ${expense.name} </td>
+    <td> ${totalCost} </td>
+    `;
+
+    console.log("------------------",content);
+
     const li = newElement('tr', content, 'list-item');
 
-    const deleteButton = newElement('button', 'Delete', 'btn', () => { deleteExp(expense, li) });
+    const deleteButton = newElement('button', 'Delete Expense', 'btn', () => { deleteExp(expense, li) });
     li.appendChild(deleteButton);
     ul.appendChild(li);
 }
