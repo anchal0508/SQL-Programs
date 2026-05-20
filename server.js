@@ -1,20 +1,27 @@
+require("dotenv").config();
 const express = require('express');
-const app = express();
-const db = require('./utils/db-connection');
-const paymentRouters= require('./routes/paymentRoutes');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const axios = require('axios');
 const path = require('path');
-app.use(express.json());
+const paymentRoutes = require('./routes/paymentRoutes');
+
+const app = express();
+const port = 3000;
+
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/payment', paymentRouters);
+// Routes
+app.use('/', paymentRoutes);
 
-const file = path.join(__dirname, "views", "index.html");
-app.use('/', (req, res)=>{
-    res.sendFile(file);
-})
 
-db.sync().then(() => {
-    app.listen(3000, () => console.log("Online..."))
-}).catch((err) => {
-    console.log('Unable to sync with DB ', err.message);
-})
+// Error Handling Middleware
+
+// Start the server
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+});
