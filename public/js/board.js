@@ -19,13 +19,13 @@ const showList = async () => {
 
 function displayOnScreen(expense) {
     const ul = document.getElementById('leader-list');
-    const totalCost = expense.total_cost || 0; 
+    const totalCost = expense.total_cost || 0;
     const content = `
     <td> ${expense.name} </td>
     <td> ${totalCost} </td>
     `;
 
-    console.log("------------------",content);
+    console.log("------------------", content);
 
     const li = newElement('tr', content, 'list-item');
 
@@ -37,9 +37,17 @@ function displayOnScreen(expense) {
 
 const deleteExp = async (expense, li) => {
     li.remove();
+    const token = localStorage.getItem('token');
+
+    const idToSend = expense.id || expense.userId;
+
+    if (!idToSend) {
+        console.error("Error: ID is undefined before sending request!");
+        return;
+    }
     try {
-        const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:3000/expenses/delete/${expense.id}`, {
+
+        await axios.delete(`http://localhost:3000/expenses/deleteall/${idToSend}`, {
             headers: { "Authorization": token }
         });
     } catch (error) {

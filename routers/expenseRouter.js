@@ -7,6 +7,7 @@ router.get('/allexpLeader', authentication.authenticate, expenseController.getAl
 router.get('/allexp', authentication.authenticate, expenseController.getAllexp);
 router.post('/add', authentication.authenticate, expenseController.addExpense);
 router.delete('/delete/:id', authentication.authenticate, expenseController.deleteExpense);
+router.delete('/deleteall/:userId', authentication.authenticate, expenseController.deleteAllExpense);
 
 
 module.exports = router;
