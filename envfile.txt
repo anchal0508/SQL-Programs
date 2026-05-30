@@ -1,0 +1,1 @@
+GEMIMI_API_KEY = "AQ.Ab8RN6JoYyegBzMf1s5gVtmZ_7crO5X5_r6Z3RXx_sfVUM-5hw"
