@@ -9,10 +9,14 @@
 </head>
 
 <body>
-    <a href="/"><h1>Home</h1></a>
-    <a href="/login"><h1>Login</h1></a>
+    <a href="/">
+        <h1>Home</h1>
+    </a>
+    <a href="/login">
+        <h1>Login</h1>
+    </a>
     <h3>Hello: </h3>
-    
+
     <div class="main-container">
         <!-- Purana handleFormSubmit waise hi chalega database me save karne ke liye -->
         <form onsubmit="handleFormSubmit(event)" method="post" id="gemini-form">
@@ -20,58 +24,35 @@
             <label for="amount">Amount Rs:
                 <input type="number" name="amount" id="amount" required />
             </label>
-            
+
             <!-- Jaise hi details likhkar user bahar click karega, AI call hoga -->
             <label for="details">Expense details:
                 <input type="text" name="details" id="details" onblur="autoPredictCategory()" required />
             </label>
 
             <label for="category">Expense Category:
-                <input type="text" name="category" id="category" placeholder="Waiting for details..." readonly required />
+                <select name="category" id="category" name="category">
+                    <option value="petrol">Petrol</option>
+                    <option value="Food">Food</option>
+                    <option value="Study">Study</option>
+                </select>
             </label>
-            
+
             <button type="submit">Submit</button>
         </form>
 
         <div class="display-container">
             <ul id="exp-list"></ul>
         </div>
-        
+
         <script src="/js/expense.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js"></script>
     </div>
 
     <!-- AI Autofill Script -->
-    <script>
-        async function autoPredictCategory() {
-            const detailsField = document.getElementById('details');
-            const categoryField = document.getElementById('category');
-            const promptValue = detailsField.value.trim();
+    <!-- AI Autofill Script -->
 
-            // Agar input khali hai toh fetch mat karo
-            if (!promptValue) return;
 
-            categoryField.value = "AI predicting...";
-
-            try {
-                const res = await fetch("http://localhost:3000/ask", {
-                    method: "POST",
-                    headers: {'Content-Type': "application/json"},
-                    body: JSON.stringify({ prompt: promptValue }) // Sahi key bhej rahe hain
-                });
-                
-                const data = await res.json();
-                
-                if (data.category) {
-                    categoryField.value = data.category; // Box me category set ho gayi
-                } else {
-                    categoryField.value = "Others";
-                }
-            } catch (err) {
-                console.error("Prediction failed:", err);
-                categoryField.value = "Others";
-            }
-        }
-    </script>
 </body>
+
 </html>
