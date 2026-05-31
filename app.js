@@ -4,6 +4,14 @@ const cors = require('cors');
 const app = express();
 const db = require('./utils/db-connection');
 const path = require('path');
+app.use(express.urlencoded({extended: true}));
+
+
+
+
+const { v4: uuidv4 } = require('uuid');
+
+uuidv4(); // ⇨ 'ab16e731-6cee-424d-81a0-5929e9bdb0cc'
 
 
 
