@@ -20,16 +20,14 @@ const getAllexpLeaderBoard = async (req, res) => {
             attributes: [
                 'id',
                 'name',
-                // MySQL direct amount column target karega bina mismatch ke
                 [sequelize.fn('sum', sequelize.col('amount')), 'total_cost']
             ],
             include: [
                 {
                     model: Expense,
-                    attributes: [] // Row integration skip karne ke liye array blank rahega
+                    attributes: [] 
                 }
             ],
-            // Database log ke alias sequence 'users AS user' ke hisaab se correct configuration
             group: ['user.id'],
             order: [[sequelize.literal('total_cost'), 'DESC']],
             subQuery: false
@@ -46,18 +44,15 @@ const addExpense = async (req, res) => {
     const t = await sequelize.transaction();
     try {
         const { amount, details, category } = req.body;
-
         const userId = req.user.id;
-        const lastExp = await Expense.findOne(
-            {
-                where: { userId: userId },
-                order: [['createdAt', 'DESC']],
-                transaction: t
 
-            });
+        const lastExp = await Expense.findOne({
+            where: { userId: userId },
+            order: [['createdAt', 'DESC']],
+            transaction: t
+        });
 
         const previousTotal = lastExp ? lastExp.TotalAmount : 0;
-
         const updatedTotalAmount = Number(previousTotal) + Number(amount);
 
         const exp = await Expense.create({
@@ -68,10 +63,7 @@ const addExpense = async (req, res) => {
             userId: userId
         }, { transaction: t });
 
-        // commit if everything is succeeds
         await t.commit();
-
-
         res.status(201).json({
             message: "Expense added...",
             data: exp
@@ -88,7 +80,7 @@ const deleteExpense = async (req, res) => {
         const { id } = req.params;
         const userId = req.user.id;
 
-        // 1. Find the target expense first to fetch its amount
+        // 1. Fetch the target row before deleting it
         const targetExpense = await Expense.findOne({
             where: { id: id, userId: userId },
             transaction: t
@@ -99,16 +91,20 @@ const deleteExpense = async (req, res) => {
             return res.status(404).json({ message: "Expense data Not Found or Unauthorized...!" });
         }
 
-        const expenseAmount = targetExpense.amount;
-
-        // 2. Delete the expense record
-        await targetExpense.destroy({ transaction: t });
-
-        // 3. Decrement user's total expenses by the deleted amount
-        await User.decrement(
-            { totalExpenses: expenseAmount },
-            { where: { id: userId }, transaction: t }
+        // 2. Update subsequent TotalAmounts before deleting this row
+        await Expense.update(
+            { TotalAmount: sequelize.literal(`TotalAmount - ${Number(targetExpense.amount)}`) },
+            {
+                where: {
+                    userId: userId,
+                    createdAt: { [sequelize.Op.gt]: targetExpense.createdAt }
+                },
+                transaction: t
+            }
         );
+
+        // 3. Delete the target expense record
+        await targetExpense.destroy({ transaction: t });
 
         await t.commit();
         res.status(200).json({ message: "Expense Deleted Successfully...!" });
@@ -118,16 +114,13 @@ const deleteExpense = async (req, res) => {
     }
 }
 
-
 const deleteAllExpense = async (req, res) => {
     const t = await sequelize.transaction();
     try {
         const { userId } = req.params;
 
         const exp = await Expense.destroy({
-            where: {
-                userId: userId,
-            },
+            where: { userId: userId },
             transaction: t
         });
 
@@ -139,7 +132,7 @@ const deleteAllExpense = async (req, res) => {
         await t.commit();
         res.status(200).json({ message: "Expense Deleted Successfully...!" });
     } catch (error) {
-        (await t).rollback;
+        await t.rollback();
         res.status(500).json({ message: error.message });
     }
 }
