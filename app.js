@@ -17,6 +17,7 @@ const login = path.join(__dirname, "view", "login.html");
 const signUp = path.join(__dirname, "view", "signup.html");
 const hom = path.join(__dirname, "view", "index.html");
 const expense = path.join(__dirname, "view", "expense.html");
+const forgotPassword = path.join(__dirname, "view", "forgotPass.html");
 
 const userRouter = require('./routers/userRouter');
 const expenseRouter = require('./routers/expenseRouter');
@@ -28,6 +29,9 @@ app.get('/login', (req, res) => {
 
 app.get('/signup', (req, res) => {
     res.sendFile(signUp);
+});
+app.get('/forgotpass', (req, res) => {
+    res.sendFile(forgotPassword);
 });
 
 app.get('/expenses', (req, res) => {

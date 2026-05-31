@@ -9,26 +9,31 @@
 </head>
 
 <body>
-    <a href="/">
-        <h1>Home</h1>
-    </a>
+    <div class="header">
+
+        <a href="/">
+            <h1>Home</h1>
+        </a>
 
 
-    <a href="/signup">
-        <h1>Signup</h1>
-    </a>
+        <a href="/signup">
+            <h1>Signup</h1>
+        </a>
+
+    </div>
 
     <div class="main-container">
         <form onsubmit="handleLogin(event)" method="post">
             <h2>Login</h2>
             <label for="email">Email:
-                <input type="email" name="email" , id="email" required/>
+                <input type="email" name="email" , id="email" required />
             </label>
             <label for="pass">Password:
-                <input type="password" name="pass" , id="pass" required/>
+                <input type="password" name="pass" , id="pass" required />
             </label>
             <button type="submit">Login</button>
         </form>
+        <a href="/forgotpass"><button>Forgot Password</button></a>
 
         <script src="/js/signup.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js"></script>
